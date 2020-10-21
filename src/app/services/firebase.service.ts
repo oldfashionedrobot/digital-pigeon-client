@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import * as firebase from 'firebase';
 
+(window as any).fb = firebase;
+
 @Injectable({
   providedIn: 'root',
 })
