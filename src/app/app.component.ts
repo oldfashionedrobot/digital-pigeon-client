@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user.model';
 import { FirebaseService } from './services/firebase.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +10,12 @@ import { FirebaseService } from './services/firebase.service';
 })
 export class AppComponent implements OnInit {
   title = 'digital-pigeon';
-  user$: Promise<User>;
+  user$: Observable<User>;
 
   constructor(private fbService: FirebaseService) {}
 
   ngOnInit() {
-    this.user$ = this.fbService.signIn();
+    this.fbService.signIn();
+    this.user$ = this.fbService.user$.asObservable();
   }
 }

@@ -1,1 +1,9 @@
-{{ (user$ | async)?.name }} {{ (user$ | async)?.id }}
+<nav>
+  {{ (user$ | async)?.name }} {{ (user$ | async)?.id }}
+  <a routerLink="/loft">Loft</a>
+  <a routerLink="/messages">Messages</a>
+</nav>
+
+<section class="content">
+  <router-outlet></router-outlet>
+</section>
