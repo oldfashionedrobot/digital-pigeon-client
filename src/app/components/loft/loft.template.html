@@ -1,0 +1,37 @@
+<h1>Loft</h1>
+
+<div class="loft-wrapper">
+  <a href="javascript:void(0)" (click)="goLeft()">Left</a>
+  <a href="javascript:void(0)" (click)="goRight()">Right</a>
+  <div class="loft loft-view-{{ loftView }}">
+    <section class="loft-section">
+      <h3>Inbox</h3>
+      <div class="pigeon-wrapper">
+        <pigeon-item
+          *ngFor="let pigeon of pigeons$ | async"
+          [pigeon]="pigeon"
+        ></pigeon-item>
+      </div>
+    </section>
+
+    <section class="loft-section">
+      <h3>Your Pigeons</h3>
+      <div class="pigeon-wrapper">
+        <pigeon-item
+          *ngFor="let pigeon of pigeons$ | async"
+          [pigeon]="pigeon"
+        ></pigeon-item>
+      </div>
+    </section>
+
+    <section class="loft-section">
+      <h3>Some Other Guy's Pigeons</h3>
+      <div class="pigeon-wrapper">
+        <pigeon-item
+          *ngFor="let pigeon of pigeons$ | async"
+          [pigeon]="pigeon"
+        ></pigeon-item>
+      </div>
+    </section>
+  </div>
+</div>

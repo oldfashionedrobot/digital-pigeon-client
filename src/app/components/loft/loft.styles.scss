@@ -1,0 +1,28 @@
+.loft-wrapper {
+  overflow-x: hidden;
+  position: relative;
+}
+
+.loft {
+  display: flex;
+  width: 300vw;
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+
+  &.loft-view-1 {
+    margin-left: -100vw;
+  }
+
+  &.loft-view-2 {
+    margin-left: -200vw;
+  }
+}
+
+.loft-section {
+  width: 100vw;
+}
+
+.pigeon-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
