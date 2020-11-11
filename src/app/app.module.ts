@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
@@ -12,7 +14,7 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
-  imports: [BrowserModule, CommonModule, RouterModule, AppRoutingModule],
+  imports: [BrowserModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, AppRoutingModule],
   declarations: [
     AppComponent,
     LoftComponent,
@@ -24,4 +26,4 @@ import { MessageComponent } from './components/message/message.component';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

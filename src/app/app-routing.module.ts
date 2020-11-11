@@ -30,17 +30,10 @@ const routes: Routes = [
     path: 'messages/:messageId',
     component: MessageComponent,
   },
-  // {
-  //   // how to id?? maybe pigeons with a message attached, add into loft?
-  //   path: 'inbox',
-  // },
-  // {
-  //   path: 'messages',
-  // },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

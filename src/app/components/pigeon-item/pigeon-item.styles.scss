@@ -1,0 +1,33 @@
+@import '../../variables.scss';
+
+.pigeon {
+  width: 10vw;
+  display: inline-block;
+  border: 1px solid grey;
+
+  &.has-message {
+    position: relative;
+          
+    &:before {
+      font-family: $altFont;
+      display: block;
+      content: "New Message";
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      background: red;
+      border-radius: 100px;
+      color: white;
+      // width: 16px;
+      height: 16px;
+      line-height: 14px;
+      text-align: center;
+      font-size: 12px;
+      padding: 0 3px;
+    }
+  }
+}
+
+.pigeon img {
+  width: 100%;
+}

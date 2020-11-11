@@ -6,7 +6,7 @@ export class Pigeon {
   name: string = 'Bobby';
   imgUrl: string = 'assets/img/pigeon.png';
 
-  constructor(imgVariant?: number, messageId?: string, ownerId?: string) {
+  constructor(imgVariant?: number, messageId?: string, ownerId?: string, currentUserId?: string) {
     if (imgVariant) {
       this.imgUrl = `assets/img/pigeon${imgVariant}.png`;
       this.name = 'Pigeon ' + imgVariant;
@@ -15,5 +15,6 @@ export class Pigeon {
 
     this.messageId = messageId;
     this.ownerId = ownerId;
+    this.currentUserId = currentUserId;
   }
 }

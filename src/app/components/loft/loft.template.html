@@ -20,10 +20,18 @@
       </a>
     </span>
     <span class="filter-wrapper">
-      <input placeholder="Search for Correspondent" id="search" type="text" class="loft-search">
+      <input name="search" [formControl]="searchField" placeholder="Search for Correspondent" id="search" type="text"
+        class="loft-search">
+      <span *ngIf="searchField.value != ''" (click)="searchField.setValue('')" class="clear-search">
+        X
+      </span>
     </span>
   </nav>
   <div class="loft">
-    <pigeon-item *ngFor="let pigeon of pigeons$ | async" [pigeon]="pigeon"></pigeon-item>
+    <p *ngIf="(pigeons$ | async)?.length == 0" class="loft-empty">
+      No pigeons found.
+    </p>
+    <pigeon-item *ngFor="let pigeon of pigeons$ | async" [pigeon]="pigeon">
+    </pigeon-item>
   </div>
 </div>
