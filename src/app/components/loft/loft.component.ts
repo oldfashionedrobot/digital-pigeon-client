@@ -4,7 +4,6 @@ import { User, Pigeon } from '../../models';
 import { FirebaseService, PigeonService, UserService } from '../../services';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ConsoleReporter } from 'jasmine';
 
 export enum LoftFilters {
   All = '',
@@ -78,7 +77,6 @@ export class LoftComponent implements OnInit {
               filteredPigs = pigeons;
           }
 
-          console.log(filter);
 
           if (search != '') {
             filteredPigs = filteredPigs.filter(p => {
