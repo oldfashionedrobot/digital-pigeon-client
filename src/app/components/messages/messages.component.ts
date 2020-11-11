@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
     <div class="messages">
       <p *ngFor="let message of messages$ | async">
         {{ message.text }}
-        <a routerLink="./{{ message.id }}">Read Message</a>
+        <a [routerLink]="['', { outlets: { modal: ['read-message', message.id] } }]">Read Message</a>
       </p>
     </div>
   `,
@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 export class MessagesComponent implements OnInit {
   messages$: Observable<Message[]>;
 
-  constructor(private _messageService: MessageService) {}
+  constructor(private _messageService: MessageService) { }
 
   ngOnInit() {
     this.messages$ = this._messageService.getMessages();
