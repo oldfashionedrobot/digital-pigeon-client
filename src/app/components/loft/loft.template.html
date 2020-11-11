@@ -1,37 +1,29 @@
 <h1>Loft</h1>
 
 <div class="loft-wrapper">
-  <a href="javascript:void(0)" (click)="goLeft()">Left</a>
-  <a href="javascript:void(0)" (click)="goRight()">Right</a>
-  <div class="loft loft-view-{{ loftView }}">
-    <section class="loft-section">
-      <h3>Inbox</h3>
-      <div class="pigeon-wrapper">
-        <pigeon-item
-          *ngFor="let pigeon of pigeons$ | async"
-          [pigeon]="pigeon"
-        ></pigeon-item>
-      </div>
-    </section>
-
-    <section class="loft-section">
-      <h3>Your Pigeons</h3>
-      <div class="pigeon-wrapper">
-        <pigeon-item
-          *ngFor="let pigeon of pigeons$ | async"
-          [pigeon]="pigeon"
-        ></pigeon-item>
-      </div>
-    </section>
-
-    <section class="loft-section">
-      <h3>Some Other Guy's Pigeons</h3>
-      <div class="pigeon-wrapper">
-        <pigeon-item
-          *ngFor="let pigeon of pigeons$ | async"
-          [pigeon]="pigeon"
-        ></pigeon-item>
-      </div>
-    </section>
+  <nav class="loft-filters">
+    <span class="filter-wrapper">
+      Filter:
+      <a (click)="filter('messages')" data-message-count="4" href="javascript:void(0)"
+        class="has-messages loft-filter filter-messages">
+        Messages
+      </a>
+      <a (click)="filter('yours')" href="javascript:void(0)" class="loft-filter filter-yours">
+        Your Pigeons
+      </a>
+      <a (click)="filter('others')" href="javascript:void(0)" class="loft-filter filter-others">Correspondent
+        Pigeons
+      </a>
+      <a *ngIf="(filter$ | async) != ''" (click)="filter('')" href="javascript:void(0)"
+        class="loft-filter filter-clear">
+        Clear Filters
+      </a>
+    </span>
+    <span class="filter-wrapper">
+      <input placeholder="Search for Correspondent" id="search" type="text" class="loft-search">
+    </span>
+  </nav>
+  <div class="loft">
+    <pigeon-item *ngFor="let pigeon of pigeons$ | async" [pigeon]="pigeon"></pigeon-item>
   </div>
 </div>

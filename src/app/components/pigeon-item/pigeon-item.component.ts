@@ -8,7 +8,7 @@ import { Pigeon, Message } from '../../models';
       {{ pigeon.name }}
       <img src="{{ pigeon.imgUrl }}" />
       <a routerLink="pigeons/{{ pigeon.id }}">View Pigeon</a>
-      <a *ngIf="message" routerLink="/messages/{{ message.id }}">
+      <a *ngIf="pigeon.messageId" routerLink="/messages/{{ pigeon.messageId }}">
         Read Message
       </a>
     </div>
@@ -16,7 +16,7 @@ import { Pigeon, Message } from '../../models';
   styles: [
     `
       .pigeon {
-        width: 17vw;
+        width: 10vw;
         display: inline-block;
         border: 1px solid grey;
       }
@@ -29,9 +29,8 @@ import { Pigeon, Message } from '../../models';
 })
 export class PigeonItemComponent implements OnInit {
   @Input() pigeon: Pigeon;
-  @Input() message: Message = new Message('hello');
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

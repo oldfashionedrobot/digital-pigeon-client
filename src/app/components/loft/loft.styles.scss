@@ -1,28 +1,58 @@
+@import '../../variables.scss';
+
 .loft-wrapper {
-  overflow-x: hidden;
   position: relative;
 }
 
 .loft {
   display: flex;
-  width: 300vw;
-  margin-left: 0;
-  transition: margin-left 0.3s ease-in-out;
-
-  &.loft-view-1 {
-    margin-left: -100vw;
-  }
-
-  &.loft-view-2 {
-    margin-left: -200vw;
-  }
-}
-
-.loft-section {
-  width: 100vw;
-}
-
-.pigeon-wrapper {
-  display: flex;
   flex-wrap: wrap;
 }
+ 
+.loft-filters {
+  display: flex;
+  justify-content: space-between;
+
+  .filter-wrapper {
+    padding: 5px;
+  }
+
+  .loft-search {
+    width: 250px;
+    border-radius: 100px;
+    height: 25px;
+    padding-left: 6px;
+    border: 2px solid #ccc;
+  }
+}
+
+.loft-filter {
+  display: inline-block;
+  padding: 4px 6px;
+}
+
+.filter-messages {
+
+  &.has-messages {
+    position: relative;
+
+    &:before {
+      font-family: $altFont;
+      display: block;
+      content: attr(data-message-count);
+      position: absolute;
+      right: -5px;
+      top: -5px;
+      background: red;
+      border-radius: 100px;
+      color: white;
+      width: 16px;
+      height: 16px;
+      line-height: 14px;
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+}
+
+

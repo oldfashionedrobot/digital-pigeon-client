@@ -1,10 +1,11 @@
 export class Message {
-  id: number = 0;
+  id: string = '0';
   fromId: string;
   pigeonId: number;
   text: string = '';
 
-  constructor(txt: string) {
+  constructor(id: string, txt: string) {
+    this.id = id;
     this.text = txt;
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import * as firebase from 'firebase';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 (window as any).fb = firebase;
 
@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 export class FirebaseService {
   email = 'snayak00@gmail.com';
   password = 'internet0!';
-  user$: Subject<User> = new Subject<User>();
+  user$: ReplaySubject<User> = new ReplaySubject<User>(1);
 
   // currentUser(): Promise<User> {
   //   return new Promise((resolve, reject) => {

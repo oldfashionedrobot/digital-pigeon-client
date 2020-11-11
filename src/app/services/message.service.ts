@@ -7,10 +7,12 @@ import { Observable, of } from 'rxjs';
 })
 export class MessageService {
   private _messages: Message[] = [
-    new Message('hello'),
-    new Message('goodbye'),
-    new Message('frankfurter'),
-    new Message('potato salad'),
+    new Message('1', 'hello'),
+    new Message('2', 'goodbye'),
+    new Message('3', 'frankfurter'),
+    new Message('4', 'potato salad'),
+    new Message('5', 'frankfurter'),
+    new Message('6', 'potato salad'),
   ];
 
   getMessages(): Observable<Message[]> {
