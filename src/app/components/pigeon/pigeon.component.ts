@@ -3,21 +3,47 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Pigeon } from '../../models';
 import { PigeonService } from '../../services';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   template: `
-    <div class="pigeon">
-      {{ (pigeon$ | async)?.name }}
-      <img src="{{ (pigeon$ | async)?.imgUrl }}" />
+    <div *ngIf="(pigeon$ | async) as pigeon" class="pigeon">
+      <div class="pigeon-pic">  
+        {{ pigeon.name }}
+        <img src="{{ pigeon.imgUrl }}" />
+      </div>  
+      <div class="pigeon-info">
+        <a *ngIf="pigeon.ownerId == pigeon.currentUserId"
+          href="javascript:void(0)"
+          [routerLink]="['', { outlets: { modal: ['send-pigeon', pigeon.id] } }]">
+          Give Pigeon to Correspondent
+        </a>
+        <a *ngIf="pigeon.ownerId != pigeon.currentUserId"
+          href="javascript:void(0)"
+          [routerLink]="['', { outlets: { modal: ['send-message', pigeon.id] } }]">
+          Send Message
+        </a>
+        <a *ngIf="pigeon.messageId"
+          href="javascript:void(0)"
+          [routerLink]="['', { outlets: { modal: ['read-message', pigeon.messageId] } }]">
+          Read Message
+        </a>
+      </div>
     </div>
   `,
   styles: [
     `
       .pigeon {
-        width: 17vw;
-        display: inline-block;
+        display: flex;
         border: 1px solid grey;
+      }
+
+      .pigeon-info {
+        flex-grow: 1;
+      }
+
+      .pigeon-pic {
+        min-width: 17vw;
       }
 
       .pigeon img {
@@ -32,14 +58,15 @@ export class PigeonComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _pigeonService: PigeonService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.pigeon$ = this._route.params.pipe(
-      switchMap((params: Params) => {
+      map((params: Params) => {
         return params['pigeonId'];
       }),
       switchMap((pigeonId: number) => {
+        console.log(pigeonId)
         return this._pigeonService.getPigeon(pigeonId);
       })
     );

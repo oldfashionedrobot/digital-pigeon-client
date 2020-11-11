@@ -1,0 +1,37 @@
+@import '../variables.scss';
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.2);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.modal-content {
+  padding: 20px;
+  background-color: white;
+  margin: 20vh auto;
+  width: 600px;
+  pointer-events: all;
+
+  nav {
+    display: flex;
+    align-items: center;
+
+    h2 {
+      flex-grow: 1;
+    }
+  }
+  
+  .close-modal {
+    text-decoration: underline;
+    font-family: $altFont;
+    right: 13px;
+    top: 13px;
+    cursor: pointer;
+  }
+}

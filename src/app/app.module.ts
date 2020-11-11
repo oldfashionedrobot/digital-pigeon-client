@@ -12,6 +12,10 @@ import { PigeonItemComponent } from './components/pigeon-item/pigeon-item.compon
 import { PigeonComponent } from './components/pigeon/pigeon.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { MessageComponent } from './components/message/message.component';
+import { SendPigeonComponent } from './components/send-pigeon/send-pigeon.component';
+import { SendMessageComponent } from './components/send-message/send-message.component';
+import { ReadMessageComponent } from './components/read-message/read-message.component';
+
 
 @NgModule({
   imports: [BrowserModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, AppRoutingModule],
@@ -22,6 +26,9 @@ import { MessageComponent } from './components/message/message.component';
     PigeonComponent,
     MessageComponent,
     MessagesComponent,
+    SendPigeonComponent,
+    SendMessageComponent,
+    ReadMessageComponent
   ],
   providers: [],
   bootstrap: [AppComponent],

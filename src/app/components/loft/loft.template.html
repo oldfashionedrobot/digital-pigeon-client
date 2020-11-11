@@ -4,8 +4,8 @@
   <nav class="loft-filters">
     <span class="filter-wrapper">
       Filter:
-      <a (click)="filter('messages')" data-message-count="4" href="javascript:void(0)"
-        class="has-messages loft-filter filter-messages">
+      <a (click)="filter('messages')" attr.data-message-count="{{numMessages}}" href="javascript:void(0)"
+        class="{{ numMessages > 0 ? 'has-messages' : '' }} loft-filter filter-messages">
         Messages
       </a>
       <a (click)="filter('yours')" href="javascript:void(0)" class="loft-filter filter-yours">

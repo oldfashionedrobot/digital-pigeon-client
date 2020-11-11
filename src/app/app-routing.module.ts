@@ -5,6 +5,10 @@ import { LoftComponent } from './components/loft/loft.component';
 import { PigeonComponent } from './components/pigeon/pigeon.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { MessageComponent } from './components/message/message.component';
+import { SendPigeonComponent } from './components/send-pigeon/send-pigeon.component';
+import { SendMessageComponent } from './components/send-message/send-message.component';
+import { ReadMessageComponent } from './components/read-message/read-message.component';
+
 
 const routes: Routes = [
   {
@@ -13,12 +17,10 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    // load all pigeons with currentUserId == yours, group by userId
     path: 'loft',
     component: LoftComponent,
   },
   {
-    // load all pigeons with currentUserId == yours, group by userId
     path: 'loft/pigeons/:pigeonId',
     component: PigeonComponent,
   },
@@ -30,6 +32,21 @@ const routes: Routes = [
     path: 'messages/:messageId',
     component: MessageComponent,
   },
+  {
+    path: 'send-pigeon/:pigeonId',
+    outlet: 'modal',
+    component: SendPigeonComponent
+  },
+  {
+    path: 'send-message/:pigeonId',
+    outlet: 'modal',
+    component: SendMessageComponent
+  },
+  {
+    path: 'read-message/:pigeonId',
+    outlet: 'modal',
+    component: ReadMessageComponent
+  }
 ];
 
 @NgModule({

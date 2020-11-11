@@ -62,6 +62,8 @@ export class LoftComponent implements OnInit {
             })
           }
 
+          this.numMessages = pigeons.reduce((acc, p) => acc + (p.messageId ? 1 : 0), 0)
+
           switch (filter) {
             case LoftFilters.Yours:
               filteredPigs = pigeons.filter(p => p.ownerId === user.id)
@@ -83,7 +85,6 @@ export class LoftComponent implements OnInit {
               return p.ownerName != null && p.ownerName.toLowerCase().includes(search.toLowerCase());
             })
           }
-
           return filteredPigs || [];
         })
       );
