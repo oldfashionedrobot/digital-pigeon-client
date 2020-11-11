@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Pigeon, Message } from '../../models';
-import { DecoratedPigeon } from '../loft/loft.component';
+import { ActivatedRoute, Params } from '@angular/router';
+import { PigeonService, UserService } from 'src/app/services';
+import { Pigeon, User } from '../../models';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -12,19 +15,41 @@ import { DecoratedPigeon } from '../loft/loft.component';
             X
           </a>
         </nav>  
-      // send message
-
+        Type a messasge to send with {{ (pigeon$ | async)?.name }} to {{ (user$ | async)?.name }}.
+        <br>
+        <textarea>
+        </textarea>
+        <div class="modal-actions">
+          <button [routerLink]="['', { outlets: { modal: null } }]">
+            Send Message
+          </button>
+        </div>
       </div>
     </div>
   `,
   styleUrls: ['../modal.styles.scss'],
 })
 export class SendMessageComponent implements OnInit {
+  user$: Observable<User>;
+  pigeon$: Observable<Pigeon>;
 
-  constructor() { }
+  constructor(private _route: ActivatedRoute, private _pigeonService: PigeonService, private _userService: UserService) { }
 
   ngOnInit() {
+    // this.user$ = this._userService.getUser();
 
+    this.pigeon$ = this._route.params.pipe(
+      map((params: Params) => {
+        return params['pigeonId'];
+      }),
+      switchMap((pigeonId: number) => {
+        return this._pigeonService.getPigeon(pigeonId);
+      })
+    );
+
+    this.user$ = this.pigeon$.pipe(switchMap(pigeon => {
+      return this._userService.getUser(pigeon.ownerId);
+    }));
 
   }
 }

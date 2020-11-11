@@ -19,7 +19,7 @@ export class MessageService {
     return of(this._messages);
   }
 
-  getMessage(id: number) {
-    return of(this._messages[id]);
+  getMessage(id: string) {
+    return of(this._messages.find(m => m.id == id));
   }
 }

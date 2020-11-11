@@ -5,13 +5,15 @@
     <span class="filter-wrapper">
       Filter:
       <a (click)="filter('messages')" attr.data-message-count="{{numMessages}}" href="javascript:void(0)"
-        class="{{ numMessages > 0 ? 'has-messages' : '' }} loft-filter filter-messages">
+        class="{{ numMessages > 0 ? 'has-messages' : '' }} {{ currentFilter == 'messages' ? 'active' : '' }} loft-filter filter-messages">
         Messages
       </a>
-      <a (click)="filter('yours')" href="javascript:void(0)" class="loft-filter filter-yours">
+      <a (click)="filter('yours')" href="javascript:void(0)"
+        class="{{ currentFilter == 'yours' ? 'active' : '' }} loft-filter filter-yours">
         Your Pigeons
       </a>
-      <a (click)="filter('others')" href="javascript:void(0)" class="loft-filter filter-others">Correspondent
+      <a (click)="filter('others')" href="javascript:void(0)"
+        class="{{ currentFilter == 'others' ? 'active' : '' }} loft-filter filter-others">Correspondent
         Pigeons
       </a>
       <a *ngIf="(filter$ | async) != ''" (click)="filter('')" href="javascript:void(0)"

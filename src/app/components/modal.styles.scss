@@ -28,10 +28,37 @@
   }
   
   .close-modal {
-    text-decoration: underline;
     font-family: $altFont;
     right: 13px;
     top: 13px;
     cursor: pointer;
   }
+}
+
+.select-user-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  .select-user {
+    padding: 4px 6px;
+    display: block;
+    cursor: pointer;
+    font-family: $altFont;
+
+    &:hover {
+      background: #eee;
+    }
+
+    &.active {
+      color: white;
+      background: #5281AB;
+    }
+  }
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-top: 12px;
 }

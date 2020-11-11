@@ -26,6 +26,7 @@ export class LoftComponent implements OnInit {
   filter$ = new BehaviorSubject<LoftFilters>(LoftFilters.All);
   searchField: FormControl = new FormControl('');
   numMessages: number = 0;
+  currentFilter: LoftFilters;
 
 
   constructor(
@@ -63,6 +64,8 @@ export class LoftComponent implements OnInit {
           }
 
           this.numMessages = pigeons.reduce((acc, p) => acc + (p.messageId ? 1 : 0), 0)
+
+          this.currentFilter = filter;
 
           switch (filter) {
             case LoftFilters.Yours:

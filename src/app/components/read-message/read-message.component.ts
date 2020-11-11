@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Pigeon, Message } from '../../models';
-import { DecoratedPigeon } from '../loft/loft.component';
+import { ActivatedRoute, Params } from '@angular/router';
+import { MessageService } from 'src/app/services';
+import { Message } from '../../models';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -12,7 +15,11 @@ import { DecoratedPigeon } from '../loft/loft.component';
             X
           </a>
         </nav>  
-      // read message
+        Message content:
+        
+        <p>
+         {{ (message$ | async)?.text }}
+        </p>
 
       </div>
     </div>
@@ -20,11 +27,19 @@ import { DecoratedPigeon } from '../loft/loft.component';
   styleUrls: ['../modal.styles.scss'],
 })
 export class ReadMessageComponent implements OnInit {
+  message$: Observable<Message>;
 
-  constructor() { }
+  constructor(private _route: ActivatedRoute, private _messageService: MessageService) { }
 
   ngOnInit() {
-
+    this.message$ = this._route.params.pipe(
+      map((params: Params) => {
+        return params['messageId'];
+      }),
+      switchMap((messageId: string) => {
+        return this._messageService.getMessage(messageId);
+      })
+    );
 
   }
 }

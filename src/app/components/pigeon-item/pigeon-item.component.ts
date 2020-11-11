@@ -11,7 +11,24 @@ import { DecoratedPigeon } from '../loft/loft.component';
       </span>
       {{ pigeon.name }}
       <img src="{{ pigeon.imgUrl }}" />
-      <a routerLink="pigeons/{{ pigeon.id }}">View Pigeon</a>
+
+      <nav>
+        <a *ngIf="pigeon.ownerId == pigeon.currentUserId"
+          href="javascript:void(0)"
+          [routerLink]="['', { outlets: { modal: ['send-pigeon', pigeon.id] } }]">
+          Give Pigeon
+        </a>
+        <a *ngIf="pigeon.ownerId != pigeon.currentUserId"
+          href="javascript:void(0)"
+          [routerLink]="['', { outlets: { modal: ['send-message', pigeon.id] } }]">
+          Send Message
+        </a>
+        <a *ngIf="pigeon.messageId"
+          href="javascript:void(0)"
+          [routerLink]="['', { outlets: { modal: ['read-message', pigeon.messageId] } }]">
+          Read Message
+        </a>
+      </nav>
     </div>
   `,
   styleUrls: ['./pigeon-item.styles.scss'],

@@ -43,7 +43,7 @@ const routes: Routes = [
     component: SendMessageComponent
   },
   {
-    path: 'read-message/:pigeonId',
+    path: 'read-message/:messageId',
     outlet: 'modal',
     component: ReadMessageComponent
   }

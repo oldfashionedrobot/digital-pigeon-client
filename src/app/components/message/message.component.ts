@@ -19,14 +19,14 @@ export class MessageComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.message$ = this._route.params.pipe(
       switchMap((params: Params) => {
         return params['messageId'];
       }),
-      switchMap((messageId: number) => {
+      switchMap((messageId: string) => {
         return this._messageService.getMessage(messageId);
       })
     );
