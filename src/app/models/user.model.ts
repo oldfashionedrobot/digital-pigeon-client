@@ -1,15 +1,15 @@
 export class User {
   username: string;
   email: string;
-  id: string;
+  id: number;
 
   get name(): string {
     return this.username || this.email;
   }
 
   constructor(userInfo: any) {
-    this.username = userInfo.displayName;
+    this.username = userInfo.username;
     this.email = userInfo.email;
-    this.id = userInfo.uid;
+    this.id = userInfo.id;
   }
 }

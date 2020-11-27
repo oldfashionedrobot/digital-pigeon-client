@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { User, Pigeon } from '../../models';
-import { FirebaseService, PigeonService, UserService } from '../../services';
+import { AuthService, PigeonService, UserService } from '../../services';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, switchMap } from 'rxjs/operators';
 
 export enum LoftFilters {
   All = '',
@@ -30,9 +30,9 @@ export class LoftComponent implements OnInit {
 
 
   constructor(
-    private _fbService: FirebaseService,
     private _pigeonService: PigeonService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _authService: AuthService
   ) { }
 
   filter(by: LoftFilters | string) {
@@ -42,9 +42,10 @@ export class LoftComponent implements OnInit {
   ngOnInit() {
     let currentUser: User;
 
-    this.user$ = this._fbService.user$.asObservable();
+
+    this.user$ = this._authService.currentUserId$.pipe(switchMap(id => this._userService.getUser(id)));
     this.pigeons$ = combineLatest([
-      this._pigeonService.getPigeons(),
+      this._authService.currentUserId$.pipe(switchMap(id => this._pigeonService.getPigeonsForUser(id))),
       this.filter$,
       this.searchField.valueChanges.pipe(startWith('')),
       this.user$,

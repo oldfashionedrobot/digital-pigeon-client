@@ -1,11 +1,15 @@
 @import './variables';
 
-.app-nav > * {
+.app-nav > a {
   margin-right: 10px;
-  text-transform: uppercase;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .content {
   font-family: $mainFont;
+}
+
+.user-info {
+  float: right;
 }

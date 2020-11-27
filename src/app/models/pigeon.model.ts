@@ -1,20 +1,28 @@
 export class Pigeon {
   id: number = 0;
-  ownerId: string;
-  currentUserId: string;
-  messageId: string;
-  name: string = 'Bobby';
-  imgUrl: string = 'assets/img/pigeon.png';
+  ownerId: number;
+  currentUserId: number;
+  messageId: number;
+  name: string;
+  variant: number;
 
-  constructor(id: number, imgVariant?: number, messageId?: string, ownerId?: string, currentUserId?: string) {
-    if (imgVariant) {
-      this.imgUrl = `assets/img/pigeon${imgVariant}.png`;
-      this.name = 'Pigeon ' + id;
-      this.id = id;
-    }
 
-    this.messageId = messageId;
-    this.ownerId = ownerId;
-    this.currentUserId = currentUserId;
+  get imgUrl(): string {
+    return `assets/img/pigeon${this.variant}.png`;
+  }
+
+  constructor(data: {
+    id: number,
+    owner_id: number,
+    current_user_id: number,
+    name: string,
+    variant: number
+  }) {
+
+    this.id = data.id;
+    this.ownerId = data.owner_id;
+    this.currentUserId = data.current_user_id;
+    this.name = data.name;
+    this.variant = data.variant;
   }
 }

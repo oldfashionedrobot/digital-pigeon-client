@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +19,12 @@ import { ReadMessageComponent } from './components/read-message/read-message.com
 
 
 @NgModule({
-  imports: [BrowserModule, CommonModule, FormsModule, ReactiveFormsModule, RouterModule, AppRoutingModule],
+  imports: [
+    BrowserModule, CommonModule,
+    FormsModule, HttpClientModule,
+    ReactiveFormsModule, RouterModule,
+    AppRoutingModule
+  ],
   declarations: [
     AppComponent,
     LoftComponent,

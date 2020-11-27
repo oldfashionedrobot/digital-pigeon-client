@@ -1,5 +1,11 @@
 <nav class="app-nav">
-  <!-- {{ (user$ | async)?.name }} {{ (user$ | async)?.id }} -->
+  <span class="user-info">
+    <select (change)="changeUser($event.target.value)" name="userId" id="userId">
+      <option *ngFor="let user of (userOpts$ | async)" value="{{ user.id }}">{{ user.name }}</option>
+    </select>
+
+    {{ (user$ | async)?.username }} | {{ (user$ | async)?.email }}
+  </span>
   <a routerLink="/loft" routerLinkActive="active">Loft</a>
   <a routerLink="/messages" routerLinkActive="active">Archived Messages</a>
 </nav>

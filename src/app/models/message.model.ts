@@ -1,11 +1,15 @@
 export class Message {
-  id: string = '0';
-  fromId: string;
+  id: number;
+  fromId: number;
   pigeonId: number;
-  text: string = '';
+  message: string = '';
+  createdAt: Date;
 
-  constructor(id: string, txt: string) {
-    this.id = id;
-    this.text = txt;
+  constructor(data: any) {
+    this.id = data.id;
+    this.fromId = data.from_id;
+    this.pigeonId = data.pigeon_id;
+    this.message = data.message;
+    this.createdAt = new Date(data.created_at);
   }
 }

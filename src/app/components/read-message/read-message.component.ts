@@ -18,9 +18,9 @@ import { map, switchMap } from 'rxjs/operators';
         Message content:
         
         <p>
-         {{ (message$ | async)?.text }}
+         {{ (message$ | async)?.message }}
         </p>
-
+        Sent: {{ (message$ | async)?.createdAt }}
       </div>
     </div>
   `,
@@ -36,7 +36,7 @@ export class ReadMessageComponent implements OnInit {
       map((params: Params) => {
         return params['messageId'];
       }),
-      switchMap((messageId: string) => {
+      switchMap((messageId: number) => {
         return this._messageService.getMessage(messageId);
       })
     );

@@ -1,25 +1,43 @@
+import { environment } from '../../environments/environment'
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Message } from '../models';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-  private _messages: Message[] = [
-    new Message('1', 'hello'),
-    new Message('2', 'goodbye'),
-    new Message('3', 'frankfurter'),
-    new Message('4', 'potato salad'),
-    new Message('5', 'frankfurter'),
-    new Message('6', 'potato salad'),
-  ];
+  private _baseUrl: string = `${environment.apiUrl}/messages`;
 
-  getMessages(): Observable<Message[]> {
-    return of(this._messages);
+  constructor(private _http: HttpClient) { }
+
+  getMessages(): Observable<Message[] | any> {
+    return this._http.get(this._baseUrl).pipe(
+      map((resp: { data: [] }) => {
+        return resp.data.map(r => {
+          return new Message(r);
+        });
+      })
+    )
   }
 
-  getMessage(id: string) {
-    return of(this._messages.find(m => m.id == id));
+  getMessage(id: number): Observable<Message> {
+    return this._http.get(`${this._baseUrl}/${id}`).pipe(
+      map((resp: { data: Array<any> }) => {
+        return new Message(resp.data[0]);
+      })
+    )
+  }
+
+  getMessagesForUser(userId: number): Observable<Message[] | any> {
+    return this._http.get(`${this._baseUrl}/user/${userId}`).pipe(
+      map((resp: { data: [] }) => {
+        return resp.data.map(r => {
+          return new Message(r);
+        });
+      })
+    )
   }
 }

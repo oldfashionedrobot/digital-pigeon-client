@@ -7,8 +7,8 @@ import { switchMap } from 'rxjs/operators';
 
 @Component({
   template: `
-    <div class="message">
-      message single
+    <div *ngIf="(message$ | async) as message" class="message">
+      {{ message.message }}
     </div>
   `,
   styles: [``],
@@ -26,7 +26,7 @@ export class MessageComponent implements OnInit {
       switchMap((params: Params) => {
         return params['messageId'];
       }),
-      switchMap((messageId: string) => {
+      switchMap((messageId: number) => {
         return this._messageService.getMessage(messageId);
       })
     );

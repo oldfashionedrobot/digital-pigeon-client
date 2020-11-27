@@ -66,7 +66,6 @@ export class PigeonComponent implements OnInit {
         return params['pigeonId'];
       }),
       switchMap((pigeonId: number) => {
-        console.log(pigeonId)
         return this._pigeonService.getPigeon(pigeonId);
       })
     );

@@ -3,9 +3,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import * as firebase from 'firebase';
-
-firebase.initializeApp(environment.firebase);
 
 if (environment.production) {
   enableProdMode();

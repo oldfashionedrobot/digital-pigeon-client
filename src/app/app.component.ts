@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user.model';
-import { FirebaseService } from './services/firebase.service';
 import { Observable } from 'rxjs';
+import { AuthService, UserService } from './services';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,19 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'digital-pigeon';
   user$: Observable<User>;
+  userOpts$: Observable<User[]>;
 
-  constructor(private fbService: FirebaseService) {}
+
+  constructor(private _userService: UserService, private _authService: AuthService) { }
 
   ngOnInit() {
-    this.fbService.signIn();
-    this.user$ = this.fbService.user$.asObservable();
+    this.user$ = this._authService.currentUserId$.pipe(switchMap(id => this._userService.getUser(id)));
+
+    this.userOpts$ = this._userService.getUsers();
   }
+
+  changeUser(value: number) {
+    this._authService.changeUser(value);
+  }
+
 }
