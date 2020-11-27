@@ -16,6 +16,7 @@ export class Pigeon {
     owner_id: number,
     current_user_id: number,
     name: string,
+    message_id: number,
     variant: number
   }) {
 
@@ -23,6 +24,7 @@ export class Pigeon {
     this.ownerId = data.owner_id;
     this.currentUserId = data.current_user_id;
     this.name = data.name;
+    this.messageId = data.message_id;
     this.variant = data.variant;
   }
 }

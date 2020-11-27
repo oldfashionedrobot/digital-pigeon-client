@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { MessageService } from 'src/app/services';
+import { MessageService, PigeonService } from 'src/app/services';
 import { Message } from '../../models';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -29,7 +29,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class ReadMessageComponent implements OnInit {
   message$: Observable<Message>;
 
-  constructor(private _route: ActivatedRoute, private _messageService: MessageService) { }
+  constructor(private _route: ActivatedRoute, private _messageService: MessageService, private _pigeonService: PigeonService) { }
 
   ngOnInit() {
     this.message$ = this._route.params.pipe(
@@ -40,6 +40,12 @@ export class ReadMessageComponent implements OnInit {
         return this._messageService.getMessage(messageId);
       })
     );
+
+    this.message$.pipe(take(1)).subscribe(msg => {
+      this._pigeonService.readPigeon(msg.pigeonId).then(r => {
+        console.log('marked as read', r);
+      })
+    })
 
   }
 }

@@ -34,6 +34,10 @@ export class PigeonService {
     )
   }
 
+  readPigeon(id: number): Promise<object> {
+    return this._http.put(`${this._baseUrl}/${id}/read`, {}).toPromise();
+  }
+
   getPigeonsForUser(userId: number): Observable<Pigeon[] | any> {
     return this._http.get(`${this._baseUrl}/user/${userId}`).pipe(
       map((resp: { data: [] }) => {

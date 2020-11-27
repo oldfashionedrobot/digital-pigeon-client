@@ -4,8 +4,6 @@ import { PigeonService, UserService, MessageService } from 'src/app/services';
 import { Pigeon, User } from '../../models';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { runInThisContext } from 'vm';
 
 @Component({
   template: `

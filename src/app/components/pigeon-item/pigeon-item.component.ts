@@ -13,7 +13,7 @@ import { DecoratedPigeon } from '../loft/loft.component';
       <img src="{{ pigeon.imgUrl }}" />
 
       <nav>
-        <a *ngIf="pigeon.ownerId == pigeon.currentUserId"
+        <a *ngIf="pigeon.ownerId == pigeon.currentUserId && !pigeon.messageId"
           href="javascript:void(0)"
           [routerLink]="['', { outlets: { modal: ['send-pigeon', pigeon.id] } }]">
           Give Pigeon

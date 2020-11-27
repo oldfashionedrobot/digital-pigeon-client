@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { User, Pigeon } from '../../models';
 import { AuthService, PigeonService, UserService } from '../../services';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, combineLatest, of } from 'rxjs';
+import { map, startWith, switchMap, shareReplay } from 'rxjs/operators';
 
 export enum LoftFilters {
   All = '',
@@ -42,19 +42,26 @@ export class LoftComponent implements OnInit {
   ngOnInit() {
     let currentUser: User;
 
-    this.user$ = this._authService.currentUserId$.pipe(switchMap(id => this._userService.getUser(id)));
-    this.pigeons$ = combineLatest([
-      this._authService.currentUserId$.pipe(switchMap(id => this._pigeonService.getPigeonsForUser(id))),
-      this.filter$,
-      this.searchField.valueChanges.pipe(startWith('')),
-      this.user$,
-    ])
-      .pipe(
-        map(([pigeons, filter, search, user]) => {
-          currentUser = user;
-          let filteredPigs;
+    this.user$ = this._authService.currentUserId$.pipe(
+      switchMap(id => {
+        this.filter$.next(LoftFilters.All);
+        this.searchField.setValue('');
+        return this._userService.getUser(id)
+      }),
+      shareReplay(1)
+    );
 
-          console.log('switch');
+    this.pigeons$ =
+      combineLatest([
+        this.user$.pipe(switchMap(user => {
+          currentUser = user;
+          return this._pigeonService.getPigeonsForUser(user.id)
+        })),
+        this.filter$,
+        this.searchField.valueChanges.pipe(startWith('')),
+      ]).pipe(
+        map(([pigeons, filter, search]) => {
+          let filteredPigs;
 
           if (pigeons != null) {
             pigeons.forEach(async (p: DecoratedPigeon) => {
@@ -71,10 +78,10 @@ export class LoftComponent implements OnInit {
 
           switch (filter) {
             case LoftFilters.Yours:
-              filteredPigs = pigeons.filter(p => p.ownerId === user.id)
+              filteredPigs = pigeons.filter(p => p.ownerId === currentUser.id)
               break;
             case LoftFilters.Correspondents:
-              filteredPigs = pigeons.filter(p => p.ownerId !== user.id)
+              filteredPigs = pigeons.filter(p => p.ownerId !== currentUser.id)
               break;
             case LoftFilters.HaveMessages:
               filteredPigs = pigeons.filter(p => p.messageId != null)
@@ -91,7 +98,8 @@ export class LoftComponent implements OnInit {
             })
           }
           return filteredPigs || [];
-        })
+        }),
+        shareReplay(1)
       );
   }
 }
