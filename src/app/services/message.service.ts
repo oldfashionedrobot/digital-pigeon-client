@@ -31,6 +31,11 @@ export class MessageService {
     )
   }
 
+
+  readMessage(id: number): Promise<object> {
+    return this._http.put(`${this._baseUrl}/${id}/read`, {}).toPromise();
+  }
+
   getMessagesForUser(userId: number): Observable<Message[] | any> {
     return this._http.get(`${this._baseUrl}/user/${userId}`).pipe(
       map((resp: { data: [] }) => {

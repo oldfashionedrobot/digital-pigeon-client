@@ -29,7 +29,7 @@ import { map, switchMap, take } from 'rxjs/operators';
 export class ReadMessageComponent implements OnInit {
   message$: Observable<Message>;
 
-  constructor(private _route: ActivatedRoute, private _messageService: MessageService, private _pigeonService: PigeonService) { }
+  constructor(private _route: ActivatedRoute, private _messageService: MessageService) { }
 
   ngOnInit() {
     this.message$ = this._route.params.pipe(
@@ -42,7 +42,7 @@ export class ReadMessageComponent implements OnInit {
     );
 
     this.message$.pipe(take(1)).subscribe(msg => {
-      this._pigeonService.readPigeon(msg.pigeonId).then(r => {
+      this._messageService.readMessage(msg.id).then(r => {
         console.log('marked as read', r);
       })
     })
