@@ -42,7 +42,6 @@ export class LoftComponent implements OnInit {
   ngOnInit() {
     let currentUser: User;
 
-
     this.user$ = this._authService.currentUserId$.pipe(switchMap(id => this._userService.getUser(id)));
     this.pigeons$ = combineLatest([
       this._authService.currentUserId$.pipe(switchMap(id => this._pigeonService.getPigeonsForUser(id))),
@@ -54,6 +53,8 @@ export class LoftComponent implements OnInit {
         map(([pigeons, filter, search, user]) => {
           currentUser = user;
           let filteredPigs;
+
+          console.log('switch');
 
           if (pigeons != null) {
             pigeons.forEach(async (p: DecoratedPigeon) => {

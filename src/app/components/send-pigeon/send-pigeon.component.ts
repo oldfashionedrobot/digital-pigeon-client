@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { User, Pigeon } from '../../models';
 import { UserService, PigeonService } from 'src/app/services';
 import { Observable } from 'rxjs';
@@ -25,7 +25,7 @@ import { map, switchMap } from 'rxjs/operators';
         </ul>
 
         <div class="modal-actions">
-          <button [routerLink]="['', { outlets: { modal: null } }]" [disabled]="!selectedUser">
+          <button (click)="givePigeon()" [disabled]="!selectedUser">
             Give Pigeon
           </button>
         </div>
@@ -38,15 +38,25 @@ import { map, switchMap } from 'rxjs/operators';
 export class SendPigeonComponent implements OnInit {
   users$: Observable<User[]>;
   pigeon$: Observable<Pigeon>;
-  selectedUser: any;
+  selectedUser: number;
 
-  constructor(private _route: ActivatedRoute, private _userService: UserService, private _pigeonService: PigeonService) { }
+  private _pigeonId: number;
+
+  constructor(private _route: ActivatedRoute, private _router: Router, private _userService: UserService, private _pigeonService: PigeonService) { }
+
+  givePigeon() {
+    this._pigeonService.givePigeon(this._pigeonId, this.selectedUser).then(m => {
+      this._router.navigate(['', { outlets: { modal: null } }]);
+    });
+
+  }
 
   ngOnInit() {
     this.users$ = this._userService.getUsers();
 
     this.pigeon$ = this._route.params.pipe(
       map((params: Params) => {
+        this._pigeonId = params['pigeonId'];
         return params['pigeonId'];
       }),
       switchMap((pigeonId: number) => {

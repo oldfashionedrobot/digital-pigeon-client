@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { PigeonService, UserService } from 'src/app/services';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { PigeonService, UserService, MessageService } from 'src/app/services';
 import { Pigeon, User } from '../../models';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { runInThisContext } from 'vm';
 
 @Component({
   template: `
@@ -17,10 +19,10 @@ import { map, switchMap } from 'rxjs/operators';
         </nav>  
         Type a messasge to send with {{ (pigeon$ | async)?.name }} to {{ (user$ | async)?.name }}.
         <br>
-        <textarea>
+        <textarea [(ngModel)]="messageText">
         </textarea>
         <div class="modal-actions">
-          <button [routerLink]="['', { outlets: { modal: null } }]">
+          <button (click)="sendMessage()">
             Send Message
           </button>
         </div>
@@ -32,14 +34,22 @@ import { map, switchMap } from 'rxjs/operators';
 export class SendMessageComponent implements OnInit {
   user$: Observable<User>;
   pigeon$: Observable<Pigeon>;
+  private _pigeonId: number;
+  messageText: string;
 
-  constructor(private _route: ActivatedRoute, private _pigeonService: PigeonService, private _userService: UserService) { }
+  constructor(private _route: ActivatedRoute, private _router: Router, private _messageService: MessageService, private _pigeonService: PigeonService, private _userService: UserService) { }
+
+  sendMessage() {
+    this._messageService.sendMessage(this._pigeonId, this.messageText);
+    this._router.navigate(['', { outlets: { modal: null } }]);
+  }
 
   ngOnInit() {
     // this.user$ = this._userService.getUser();
 
     this.pigeon$ = this._route.params.pipe(
       map((params: Params) => {
+        this._pigeonId = params['pigeonId'];
         return params['pigeonId'];
       }),
       switchMap((pigeonId: number) => {

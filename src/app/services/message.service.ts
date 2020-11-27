@@ -40,4 +40,10 @@ export class MessageService {
       })
     )
   }
+
+  sendMessage(pigeonId: number, message: string): Promise<object> {
+    return this._http.post(`${environment.apiUrl}/send-message`, {
+      pigeonId, message
+    }).toPromise();
+  }
 }

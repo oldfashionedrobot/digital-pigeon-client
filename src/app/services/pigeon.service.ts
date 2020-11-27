@@ -43,4 +43,10 @@ export class PigeonService {
       })
     )
   }
+
+  givePigeon(pigeonId: number, recipientId: number): Promise<object> {
+    return this._http.post(`${environment.apiUrl}/give-pigeon`, {
+      pigeonId, recipientId
+    }).toPromise();
+  }
 }
