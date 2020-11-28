@@ -21,7 +21,9 @@ export class MessagesComponent implements OnInit {
   constructor(private _messageService: MessageService, private _authService: AuthService) { }
 
   ngOnInit() {
-    this.messages$ = this._authService.currentUserId$.pipe(switchMap(id => this._messageService.getMessagesForUser(id)));
+    this.messages$ = this._authService.currentUserId$.pipe(
+      switchMap(id => this._messageService.getMessagesForUser(id))
+    );
 
   }
 }

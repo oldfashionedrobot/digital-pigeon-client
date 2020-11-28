@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { MessageService, PigeonService } from 'src/app/services';
-import { Message } from '../../models';
+import { MessageService, PigeonService, UserService } from 'src/app/services';
+import { Message, User } from '../../models';
 import { Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { map, switchMap, take, shareReplay } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -15,7 +15,7 @@ import { map, switchMap, take } from 'rxjs/operators';
             X
           </a>
         </nav>  
-        Message content:
+        From: {{ (sender$ | async)?.name }}
         
         <p>
          {{ (message$ | async)?.message }}
@@ -28,8 +28,13 @@ import { map, switchMap, take } from 'rxjs/operators';
 })
 export class ReadMessageComponent implements OnInit {
   message$: Observable<Message>;
+  sender$: Observable<User>;
 
-  constructor(private _route: ActivatedRoute, private _messageService: MessageService) { }
+  constructor(
+    private _route: ActivatedRoute,
+    private _messageService: MessageService,
+    private _userService: UserService
+  ) { }
 
   ngOnInit() {
     this.message$ = this._route.params.pipe(
@@ -38,8 +43,11 @@ export class ReadMessageComponent implements OnInit {
       }),
       switchMap((messageId: number) => {
         return this._messageService.getMessage(messageId);
-      })
+      }),
+      shareReplay(1)
     );
+
+    this.sender$ = this.message$.pipe(switchMap(msg => this._userService.getUser(msg.fromId)))
 
     this.message$.pipe(take(1)).subscribe(msg => {
       this._messageService.readMessage(msg.id).then(r => {
