@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Message } from '../../models';
 import { AuthService, MessageService } from '../../services';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, shareReplay } from 'rxjs/operators';
 
 @Component({
   template: `
@@ -17,13 +17,19 @@ import { switchMap } from 'rxjs/operators';
 })
 export class MessagesComponent implements OnInit {
   messages$: Observable<Message[]>;
+  senders$: Observable<any>;
 
   constructor(private _messageService: MessageService, private _authService: AuthService) { }
 
   ngOnInit() {
     this.messages$ = this._authService.currentUserId$.pipe(
-      switchMap(id => this._messageService.getMessagesForUser(id))
+      switchMap(id => this._messageService.getMessagesForUser(id)),
+      shareReplay(1)
     );
+
+    this.senders$ = this.messages$.pipe(
+
+    )
 
   }
 }
